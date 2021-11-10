@@ -22,6 +22,8 @@
     }
 }
 .songRow__album {
-    height: 40px;
-    width: 40px;
+    margin-right: 20px;
+    width: auto;
+    max-height: 50px;
+    object-fit: contain;
 }

@@ -10,18 +10,17 @@ import { useDataLayerValue } from "../core/DataLayer";
 
 export const Sidebar = () => {
   const [{ playlists }, dispatch] = useDataLayerValue();
-  console.log("playlists", playlists);
   return (
     <div className="sidebar">
       <img className="sidebar__logo" src={logo} alt="" />
-      <SidebarOption Icon={HomeOutlinedIcon} title="Home" />
-      <SidebarOption Icon={SearchIcon} title="Search" />
-      <SidebarOption Icon={LibraryMusicIcon} title="Your Library" />
+      <SidebarOption Icon={HomeOutlinedIcon} title="Home" to="/" />
+      <SidebarOption Icon={SearchIcon} title="Search"  to="search"/>
+      <SidebarOption Icon={LibraryMusicIcon} title="Your Library"  to="library"/>
       <br />
       <strong className="sidebar__title">PLAYLISTS</strong>
       <hr />
       {playlists?.items?.map((playlist) => (
-        <SidebarOption title={playlist.name} />
+        <SidebarOption key={playlist.id} title={playlist.name} />
       ))}
     </div>
   );

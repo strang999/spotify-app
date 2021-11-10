@@ -1,17 +1,17 @@
-export const initialState = {
-  user: null,
-  playlists: [],
-  playing: false,
-  item: null,
-  //   remove
-  token:
-    "BQChr0cwNM_uVtrp4VvxKaG_-_zXLKy-QVKC8nyFNtbuqEL6GSTKatmBjnXg9tCmWsUgVPkTeZR8iTC-39dHKKyRjloq-QLVbotamw3MWDIcMtB-VqHqFFlifqrjGXARXh-WRlEyers2qqzZHjTODY-1bhmKkOHwXIEQTLKlatQuU9Lul",
-};
-
 const reducer = (state, action) => {
   console.log(action);
 
   switch (action.type) {
+    case "SET_LOADING":
+      return {
+        ...state,
+        loading: action.loading,
+      };
+    case "SET_PLAYBACK_STATE":  
+    return {
+      ...state,
+      playState: action.playState,
+    };
     case "SET_USER":
       return {
         ...state,
@@ -32,6 +32,22 @@ const reducer = (state, action) => {
         ...state,
         topTracks: action.topTracks,
       };
+    case "SET_TOP_UKRAINE":
+      return {
+        ...state,
+        topTracksUkraine: action.topTracksUkraine,
+      };
+    case "SEARCH_INPUT":
+      return {
+        ...state,
+        searchInput: action.searchInput,
+      };
+    case "GET_SEARCH_RESULTS":
+      return {
+        ...state,
+        searchResults: action.searchResults,
+      };
+
     default:
       return state;
   }

@@ -9,22 +9,56 @@ import ShuffleIcon from "@material-ui/icons/Shuffle";
 import "./Footer.scss";
 import { Grid, Slider } from "@material-ui/core";
 import { PlaylistPlay, VolumeDown } from "@material-ui/icons";
+import SpotifyWebApi from "spotify-web-api-js";
+import { useDataLayerValue } from "../core/DataLayer";
+import SongRow from "./SongRow";
 export const Footer = () => {
+  const spotify = new SpotifyWebApi();
+  const [value, setValue] = React.useState(50);
+  const [{ playState }, dispatch] = useDataLayerValue();
+
+  const volumeHandler = (event, newValue) => {
+    setValue(newValue);
+    spotify.setVolume(value).catch((error) => {
+      console.error(error);
+    });
+  };
+
+  const nextTrack = () => {
+    spotify.skipToNext().catch((error) => {
+      console.error(error);
+    });
+  };
+
+  const prevTrack = () => {
+    spotify.skipToNext().catch((error) => {
+      console.error(error);
+    });
+  };
+  const repeatTrack = () => {
+    spotify.setRepeat().catch((error) => {
+      console.error(error);
+    });
+  };
+  const shuffleMode = () => {
+    spotify.setShuffle().catch((error) => {
+      console.error(error);
+    });
+  };
+
   return (
     <div className="footer">
       <div className="footer__left">
-        <img className="footer__albumLogo" src="" alt="" />
         <div className="footer__songInfo">
-          <h4>No song is playing</h4>
-          <p>...</p>
+          <SongRow track={playState} />
         </div>
       </div>
       <div className="footer__center">
-        <ShuffleIcon className="footer__green" />
-        <SkipPreviousIcon className="footer__icon" />
+        <ShuffleIcon className="footer__green" onClick={shuffleMode} />
+        <SkipPreviousIcon className="footer__icon" onClick={prevTrack} />
         <PlayCircleFilledIcon fontSize="large" className="footer__icon" />
-        <SkipNextIcon className="footer__icon" />
-        <RepeatIcon className="footer__green" />
+        <SkipNextIcon className="footer__icon" onClick={nextTrack} />
+        <RepeatIcon className="footer__green" onClick={repeatTrack} />
       </div>
       <div className="footer__right">
         <Grid container spacing={2}>
@@ -35,7 +69,7 @@ export const Footer = () => {
             <VolumeDown />
           </Grid>
           <Grid item xs>
-            <Slider />
+            <Slider value={value} onChange={volumeHandler} step={20} />
           </Grid>
         </Grid>
       </div>
